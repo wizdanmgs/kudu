@@ -41,6 +41,12 @@ fn save_todos(todos: &Vec<Todo>) {
     fs::write(FILE_PATH, data).expect("Failed to write file");
 }
 
+fn reassign_ids(todos: &mut [Todo]) {
+    for (i, todo) in todos.iter_mut().enumerate() {
+        todo.id = (i + 1) as u32;
+    }
+}
+
 fn main() {
     let cli = Cli::parse();
     let mut todos = load_todos();
@@ -71,7 +77,16 @@ fn main() {
             }
         }
         Commands::Delete { id } => {
+            let original_len = todos.len();
+
             todos.retain(|todo| todo.id != id);
+
+            if todos.len() == original_len {
+                println!("Todo not found");
+                return;
+            }
+
+            reassign_ids(&mut todos);
             save_todos(&todos);
             println!("Todo deleted");
         }
