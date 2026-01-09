@@ -1,3 +1,4 @@
+use crate::error::TodoError;
 use crate::todo::Todo;
 
 pub fn add_todo(todos: &mut Vec<Todo>, title: String) {
@@ -16,24 +17,27 @@ pub fn list_todos(todos: &Vec<Todo>) {
     }
 }
 
-pub fn mark_done(todos: &mut [Todo], id: u32) -> bool {
-    if let Some(todo) = todos.iter_mut().find(|t| t.id == id) {
-        todo.completed = true;
-        return true;
+pub fn mark_done(todos: &mut [Todo], id: u32) -> Result<(), TodoError> {
+    let todo = todos.iter_mut().find(|t| t.id == id);
+    match todo {
+        Some(t) => {
+            t.completed = true;
+            Ok(())
+        }
+        None => Err(TodoError::NotFound),
     }
-    false
 }
 
-pub fn delete_todo(todos: &mut Vec<Todo>, id: u32) -> bool {
+pub fn delete_todo(todos: &mut Vec<Todo>, id: u32) -> Result<(), TodoError> {
     let original_len = todos.len();
     todos.retain(|t| t.id != id);
 
     if todos.len() == original_len {
-        return false;
+        return Err(TodoError::NotFound);
     }
 
     reassign_ids(todos);
-    true
+    Ok(())
 }
 
 fn reassign_ids(todos: &mut [Todo]) {
