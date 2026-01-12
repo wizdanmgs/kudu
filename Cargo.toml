@@ -3,8 +3,22 @@ name = "todo-cli"
 version = "0.1.0"
 edition = "2024"
 
+authors = ["Wizdan M. G. S. <wizdanshodri@protonmail.com>"]
+description = "A simple CLI todo list application written in Rust."
+license = "MIT"
+repository = "https://github.com/wizdanmgs/todo-cli"
+homepage = "https://github.com/wizdanmgs/todo-cli"
+readme = "README.md"
+keywords = ["cli", "todo", "productivity"]
+categories = ["command-line-utilities"]
+
+
 [dependencies]
 clap = { version = "4.5.54", features = ["derive"] }
 serde = { version = "1.0.228", features = ["derive"] }
 serde_json = "1.0.149"
 thiserror = "2.0.17"
+
+[[bin]]
+name = "todo"
+path = "src/main.rs"
