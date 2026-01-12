@@ -45,3 +45,82 @@ fn reassign_ids(todos: &mut [Todo]) {
         todo.id = (index + 1) as u32;
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::todo::Todo;
+
+    fn sample_todos() -> Vec<Todo> {
+        vec![
+            Todo {
+                id: 1,
+                title: "Task 1".into(),
+                completed: false,
+            },
+            Todo {
+                id: 2,
+                title: "Task 2".into(),
+                completed: false,
+            },
+            Todo {
+                id: 3,
+                title: "Task 3".into(),
+                completed: false,
+            },
+        ]
+    }
+
+    #[test]
+    fn add_todo_appends_item() {
+        let mut todos = vec![];
+
+        add_todo(&mut todos, "Learn Rust".into());
+
+        assert_eq!(todos.len(), 1);
+        assert_eq!(todos[0].id, 1);
+        assert_eq!(todos[0].title, "Learn Rust");
+        assert!(!todos[0].completed);
+    }
+
+    #[test]
+    fn mark_done_sets_complete() {
+        let mut todos = sample_todos();
+
+        let result = mark_done(&mut todos, 2);
+
+        assert!(result.is_ok());
+        assert!(todos[1].completed);
+    }
+
+    #[test]
+    fn mark_done_reutrns_error_if_not_found() {
+        let mut todos = sample_todos();
+
+        let result = mark_done(&mut todos, 100);
+
+        assert!(matches!(result, Err(TodoError::NotFound)));
+    }
+
+    #[test]
+    fn delete_todo_removes_item_and_reassigns_ids() {
+        let mut todos = sample_todos();
+
+        let result = delete_todo(&mut todos, 2);
+
+        assert!(result.is_ok());
+        assert_eq!(todos.len(), 2);
+        assert_eq!(todos[0].id, 1);
+        assert_eq!(todos[1].id, 2);
+        assert_eq!(todos[1].title, "Task 3");
+    }
+
+    #[test]
+    fn delete_todo_reutrns_error_if_not_found() {
+        let mut todos = sample_todos();
+
+        let result = delete_todo(&mut todos, 100);
+
+        assert!(matches!(result, Err(TodoError::NotFound)));
+    }
+}
