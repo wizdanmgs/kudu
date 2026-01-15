@@ -1,4 +1,4 @@
-# todo-cli
+# kudu
 
 A simple CLI todo list application written in Rust. Data is stored locally in a JSON file.
 
@@ -15,7 +15,7 @@ cargo install --path .
 ## Usage
 
 ```bash
-todo-cli <COMMAND>
+kudu <COMMAND>
 ```
 
 \<COMMAND\>:

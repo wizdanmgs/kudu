@@ -1,13 +1,13 @@
 [package]
-name = "todo-cli"
+name = "kudu"
 version = "0.1.0"
 edition = "2024"
 
 authors = ["Wizdan M. G. S. <wizdanshodri@protonmail.com>"]
 description = "A simple CLI todo list application written in Rust."
 license = "MIT"
-repository = "https://github.com/wizdanmgs/todo-cli"
-homepage = "https://github.com/wizdanmgs/todo-cli"
+repository = "https://github.com/wizdanmgs/kudu"
+homepage = "https://github.com/wizdanmgs/kudu"
 readme = "README.md"
 keywords = ["cli", "todo", "productivity"]
 categories = ["command-line-utilities"]
@@ -20,5 +20,5 @@ serde_json = "1.0.149"
 thiserror = "2.0.17"
 
 [[bin]]
-name = "todo-cli"
+name = "kudu"
 path = "src/main.rs"
