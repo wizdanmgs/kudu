@@ -6,7 +6,16 @@ use clap::{Parser, Subcommand};
     version,
     about = "A simple CLI todo list application",
     long_about = None,
-    after_help = "Data is stored locally in a JSON file."
+    after_help = r#"
+EXAMPLES:
+    kudu add "Go to the grocery store"
+    kudu list
+    kudu done 1
+    kudu delete 1
+
+NOTE:
+Data is stored locally in a JSON file.
+"#
 )]
 pub struct Cli {
     #[command(subcommand)]
